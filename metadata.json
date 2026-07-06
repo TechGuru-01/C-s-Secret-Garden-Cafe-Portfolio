@@ -1,0 +1,6 @@
+{
+  "name": "C's Garden Secret Cafe",
+  "description": "An immersive, premium website for C's Garden Secret Cafe with a full splash page, visual gallery, interactive menu, persistent reservation booking system, testimonials, and FAQs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

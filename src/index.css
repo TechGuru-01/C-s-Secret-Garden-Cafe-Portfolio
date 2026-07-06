@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-sunflower: #F7C948;
+  --color-cream: #FFF9EC;
+  --color-garden: #4E944F;
+  --color-garden-dark: #2C5E2E;
+  --color-wood: #8B5A2B;
+  --color-soft-white: #FFFDF8;
+  --color-charcoal: #2B2B2B;
+
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* Custom animations for botanical and steam effects */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(8deg);
+  }
+}
+
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(-6deg);
+  }
+}
+
+@keyframes steam {
+  0% {
+    transform: translateY(0) scaleX(1) opacity(0);
+  }
+  15% {
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-20px) scaleX(1.1);
+    opacity: 0.4;
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-40px) scaleX(0.8) opacity(0);
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 9s ease-in-out infinite;
+}
+
+.animate-steam-1 {
+  animation: steam 4s ease-in-out infinite;
+}
+
+.animate-steam-2 {
+  animation: steam 5s ease-in-out infinite 1.5s;
+}
+
+.animate-steam-3 {
+  animation: steam 4.5s ease-in-out infinite 3s;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-soft-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sunflower);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-garden);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
