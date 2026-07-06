@@ -47,7 +47,7 @@ export default function About() {
           >
             <div
               className="w-full h-full bg-cover bg-center hover:scale-105 transition-transform duration-700"
-              style={{ backgroundImage: "url('/src/assets/about/about2.jpg')" }}
+              style={{ backgroundImage: "url('/src/assets/about/about4.jpg')" }}
             />
           </motion.div>
 
@@ -66,7 +66,7 @@ export default function About() {
           >
             <div
               className="w-full h-full bg-cover bg-center hover:scale-105 transition-transform duration-700"
-              style={{ backgroundImage: "url('/src/assets/about/about1.jpg')" }}
+              style={{ backgroundImage: "url('/src/assets/about/about2.jpg')" }}
             />
           </motion.div>
 

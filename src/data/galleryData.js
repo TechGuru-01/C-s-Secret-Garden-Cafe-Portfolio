@@ -59,29 +59,29 @@ export const galleryItems = [
 
   // Moments categories (Guests / experiences)
   {
-    id: "g10",
-    imageUrl: "/input_file_8.png",
+    id: "g9",
+    imageUrl: "/src/assets/gallery/gallery9.jpg",
     caption:
       "Friends enjoying refreshing cold beverages at night under our fairy-lit canopy",
     category: "moments",
   },
   {
     id: "g11",
-    imageUrl: "/input_file_9.png",
+    imageUrl: "/src/assets/gallery/gallery10.jpg",
     caption:
       "Relaxing on our cozy orange sofa surrounded by colorful autumn foliage garlands",
     category: "moments",
   },
   {
     id: "g12",
-    imageUrl: "/input_file_10.png",
+    imageUrl: "/src/assets/gallery/gallery11.jpg",
     caption:
       "A romantic evening date under our illuminated drape-fabric gazebo",
     category: "moments",
   },
   {
     id: "g13",
-    imageUrl: "/input_file_12.png",
+    imageUrl: "/src/assets/gallery/gallery12.jpg",
     caption:
       "Lively group dinners and family celebrations filling the garden with joy",
     category: "moments",

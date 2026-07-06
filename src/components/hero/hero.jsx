@@ -140,7 +140,7 @@ export default function Hero({ onNavigate }) {
           >
             <div>
               <p className="text-2xl sm:text-3xl font-serif font-bold text-sunflower">
-                9:00 AM
+                3:00 PM
               </p>
               <p className="text-xs sm:text-sm text-white/70 font-medium">
                 Opening Time
