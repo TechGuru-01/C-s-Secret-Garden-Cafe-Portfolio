@@ -1,11 +1,24 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { testimonials } from '../../data';
-import { Star, ChevronLeft, ChevronRight, Quote, MessageSquareQuote } from 'lucide-react';
-import { FernSilhouette, CascadingBranchSilhouette, TreeSilhouette } from '../silhouettes/silhouettes';
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { testimonials } from "../../data";
+import {
+  Star,
+  ChevronLeft,
+  ChevronRight,
+  Quote,
+  MessageSquareQuote,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import {
+  FernSilhouette,
+  CascadingBranchSilhouette,
+  TreeSilhouette,
+} from "../silhouettes/silhouettes";
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isTextExpanded, setIsTextExpanded] = useState(false);
   const timeoutRef = useRef(null);
 
   const resetTimeout = () => {
@@ -16,29 +29,55 @@ export default function Testimonials() {
 
   useEffect(() => {
     resetTimeout();
+
+    // Huwag mag-auto rotate kung naka-expand ang mahabang text para hindi mairita ang nagbabasa
+    if (isTextExpanded) return;
+
     timeoutRef.current = setTimeout(
-      () => setActiveIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1)),
-      6000 // Rotate reviews every 6 seconds
+      () =>
+        setActiveIndex((prevIndex) =>
+          prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1,
+        ),
+      6000, // Rotate reviews every 6 seconds
     );
 
     return () => {
       resetTimeout();
     };
-  }, [activeIndex]);
+  }, [activeIndex, isTextExpanded]);
 
   const handlePrev = () => {
+    setIsTextExpanded(false); // Reset text expansion kapag lumipat ng slide
     setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
+    setIsTextExpanded(false); // Reset text expansion kapag lumipat ng slide
     setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  };
+
+  const selectSlide = (idx) => {
+    setIsTextExpanded(false);
+    setActiveIndex(idx);
   };
 
   const current = testimonials[activeIndex];
 
+  // Character limit bago magpakita ang "See More"
+  const TEXT_CHARACTER_LIMIT = 150;
+  const isLongText = current.text.length > TEXT_CHARACTER_LIMIT;
+
+  // Gupitin ang text kung hindi pa naka-expand
+  const displayedText =
+    isLongText && !isTextExpanded
+      ? `${current.text.substring(0, TEXT_CHARACTER_LIMIT)}...`
+      : current.text;
+
   return (
-    <section id="testimonials" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-cream/30 overflow-hidden border-b border-sunflower/10">
-      
+    <section
+      id="testimonials"
+      className="relative py-20 px-4 sm:px-6 lg:px-8 bg-cream/30 overflow-hidden border-b border-sunflower/10"
+    >
       {/* Decorative leaf / bloom graphic background */}
       <div className="absolute top-1/4 right-0 w-80 h-80 bg-sunflower/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-sunflower/5 rounded-full blur-3xl pointer-events-none" />
@@ -51,13 +90,12 @@ export default function Testimonials() {
       </div>
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ type: 'spring', stiffness: 70, damping: 14 }}
+          transition={{ type: "spring", stiffness: 70, damping: 14 }}
           className="max-w-xl mx-auto text-center mb-12"
         >
           <span className="font-mono text-xs font-semibold text-sunflower tracking-widest uppercase bg-sunflower/10 px-4 py-1.5 rounded-full flex items-center gap-1.5 justify-center w-fit mx-auto">
@@ -68,19 +106,25 @@ export default function Testimonials() {
             Loved By Our Garden Community
           </h2>
           <p className="text-sm text-charcoal/70 mt-3 leading-relaxed">
-            Read authentic reviews from families, couples, and food lovers who visited C&apos;s Secret Garden Cafe.
+            Read authentic reviews from families, couples, and food lovers who
+            visited C&apos;s Secret Garden Cafe.
           </p>
         </motion.div>
 
         {/* Carousel Slider Panel */}
-        <motion.div 
+        <motion.div
+          layout="position"
           initial={{ opacity: 0, y: 60, scale: 0.9 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ type: 'spring', stiffness: 60, damping: 12, delay: 0.15 }}
-          className="relative bg-white rounded-3xl border border-sunflower/15 shadow-xl p-8 sm:p-12 overflow-hidden min-h-[300px] flex flex-col justify-between"
+          transition={{
+            type: "spring",
+            stiffness: 60,
+            damping: 12,
+            delay: 0.15,
+          }}
+          className="relative bg-white rounded-3xl border border-sunflower/15 shadow-xl p-8 sm:p-12 overflow-hidden min-h-[300px] flex flex-col justify-between transition-all duration-300"
         >
-          
           {/* Decorative Giant Quote Vector */}
           <div className="absolute top-6 left-6 text-cream/50 pointer-events-none">
             <Quote className="w-20 h-20 rotate-180 opacity-40 text-sunflower" />
@@ -93,7 +137,7 @@ export default function Testimonials() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.4 }}
-              className="relative z-10 space-y-6"
+              className="relative z-10 space-y-6 my-auto"
             >
               {/* Star Rating Grid */}
               <div className="flex justify-center gap-1 text-sunflower">
@@ -102,10 +146,27 @@ export default function Testimonials() {
                 ))}
               </div>
 
-              {/* Review Text content */}
-              <p className="font-serif italic text-base sm:text-lg text-charcoal leading-relaxed max-w-2xl mx-auto">
-                &ldquo;{current.text}&rdquo;
-              </p>
+              {/* Review Text content with conditional styling */}
+              <div className="max-w-2xl mx-auto space-y-2">
+                <p className="font-serif italic text-base sm:text-lg text-charcoal leading-relaxed">
+                  &ldquo;{displayedText}&rdquo;
+                </p>
+
+                {/* See More / See Less Button */}
+                {isLongText && (
+                  <button
+                    onClick={() => setIsTextExpanded(!isTextExpanded)}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-sunflower hover:text-yellow-600 transition-colors cursor-pointer mt-1 focus:outline-hidden"
+                  >
+                    <span>{isTextExpanded ? "See Less" : "See More"}</span>
+                    {isTextExpanded ? (
+                      <ChevronUp className="w-3.5 h-3.5" />
+                    ) : (
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+                )}
+              </div>
 
               {/* Reviewer bio details */}
               <div className="flex items-center justify-center gap-4 pt-4">
@@ -115,14 +176,18 @@ export default function Testimonials() {
                 </div>
                 {/* Text details */}
                 <div className="text-left">
-                  <h4 className="font-serif font-bold text-sm text-charcoal">{current.name}</h4>
+                  <h4 className="font-serif font-bold text-sm text-charcoal">
+                    {current.name}
+                  </h4>
                   <div className="flex items-center gap-2 mt-0.5">
                     {current.role && (
                       <span className="text-[10px] font-mono text-sunflower bg-sunflower/10 px-2 py-0.5 rounded font-bold">
                         {current.role}
                       </span>
                     )}
-                    <span className="text-[10px] font-sans text-charcoal/40 font-medium">{current.date}</span>
+                    <span className="text-[10px] font-sans text-charcoal/40 font-medium">
+                      {current.date}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -136,9 +201,11 @@ export default function Testimonials() {
               {testimonials.map((_, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setActiveIndex(idx)}
+                  onClick={() => selectSlide(idx)}
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                    activeIndex === idx ? 'bg-sunflower w-6' : 'bg-charcoal/20 hover:bg-charcoal/40'
+                    activeIndex === idx
+                      ? "bg-sunflower w-6"
+                      : "bg-charcoal/20 hover:bg-charcoal/40"
                   }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
@@ -163,9 +230,7 @@ export default function Testimonials() {
               </button>
             </div>
           </div>
-
         </motion.div>
-
       </div>
     </section>
   );

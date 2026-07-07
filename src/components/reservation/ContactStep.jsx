@@ -89,9 +89,9 @@ export default function ContactStep({
           type="submit"
           className="px-10 py-3 rounded-full bg-sunflower hover:bg-yellow-500 text-white font-bold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer"
         >
-          <span>Confirm and Book Table</span>
+          <span>Confirm Booking</span>
         </button>
-      </div>
+      </div> 
     </form>
   );
 }
