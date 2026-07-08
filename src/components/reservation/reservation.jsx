@@ -26,7 +26,7 @@ export default function Reservation({ isOpen, onClose }) {
   // Form State
   const [date, setDate] = useState("");
   const [time, setTime] = useState("11:00 AM");
-  const [guests, setGuests] = useState(0);
+  const [guests, setGuests] = useState();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -267,11 +267,12 @@ export default function Reservation({ isOpen, onClose }) {
                           type="number"
                           min="0"
                           max={MAX_CAFE_PAX}
+                          placeholder="0"
                           value={guests}
                           onChange={(e) => {
                             const val = Math.min(
                               MAX_CAFE_PAX,
-                              Math.max(1, parseInt(e.target.value) || 1),
+                              Math.max(parseInt(e.target.value)),
                             );
                             setGuests(val);
                           }}
