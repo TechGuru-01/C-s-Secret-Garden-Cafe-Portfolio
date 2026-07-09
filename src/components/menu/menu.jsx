@@ -24,8 +24,7 @@ export default function Menu({ onNavigate }) {
       item.id === "m2" ||
       item.id === "m4" ||
       item.id === "m5" ||
-      item.id === "m6" ||
-      item.id === "p1",
+      item.id === "m6" 
   );
 
   const getCategoryIcon = (category) => {

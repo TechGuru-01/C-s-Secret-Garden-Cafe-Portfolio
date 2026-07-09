@@ -107,3 +107,15 @@
 html {
   scroll-behavior: smooth;
 }
+/* Smooth dropdown options */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select option {
+  background: #ffffff;
+  color: #222;
+  padding: 12px;
+}

@@ -33,7 +33,9 @@ export default function MenuItemCard({
         <img
           src={item.imageUrl}
           alt={item.name}
-          className="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-500"
+          loading="lazy" // <-- Native browser lazy loading
+          className="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-500 opacity-0 transition-opacity"
+          onLoad={(e) => e.currentTarget.classList.remove("opacity-0")} // <-- Soft fade-in when fully loaded
           referrerPolicy="no-referrer"
         />
 
@@ -115,10 +117,10 @@ export default function MenuItemCard({
 
         {/* Item Tags - Adjusted upper padding on desktop */}
         <div className="pt-1.5 md:pt-3 border-t border-sunflower/10 flex flex-wrap gap-1 shrink-0">
-          {item.tags?.slice(0, 2).map((tag) => (
+          {item.tags?.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="text-[8px] md:text-[10px] font-mono text-charcoal/50 bg-cream border border-sunflower/10 px-1.5 py-0.2 md:px-2 md:py-0.5 rounded"
+              className="text-[10px] md:text-[10.7px] font-mono text-black/50 bg-cream border border-sunflower/10 px-1.5 py-0.2 md:px-2 md:py-0.5 rounded"
             >
               #{tag}
             </span>
