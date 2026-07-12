@@ -538,7 +538,7 @@ export const menuItems = [
     description:
       "A rich, creamy, and decadent brew featuring robust Vietnamese dark roast coffee topped with a smooth, velvety, whipped egg yolk foam.",
     price: 130,
-    isSignature: true,
+    isSignature: false,
     imageUrl: "https://placehold.co/400x300?text=VIETNAMESE+EGG+COFFEE",
     tags: ["Creamy", "Robust", "UniqueBrew"],
   },
@@ -726,7 +726,7 @@ export const menuItems = [
     id: "d18",
     name: "Coke / Sprite / Royal (1.5L)",
     category: "Drinks",
-    subCategory: "Canned & Bottled",
+    subCategory: "Soda",
     description:
       "A classic, ice-cold 1.5-liter bottle of your favorite carbonated soda, perfect for sharing and complementing any meal.",
     price: 59,
@@ -738,13 +738,61 @@ export const menuItems = [
     id: "d19",
     name: "Coke / Sprite / Royal (Mismo)",
     category: "Drinks",
-    subCategory: "Canned & Bottled",
+    subCategory: "Soda",
     description:
       "A classic, ice-cold mismo bottle of your favorite carbonated soda, perfect for sharing and complementing any meal.",
     price: 59,
     isSignature: false,
     imageUrl: "https://placehold.co/400x300?text=SODA+Mismo",
     tags: ["Classic", "Sharing", "Carbonated"],
+  },
+  {
+    id: "d20",
+    name: "San Mig Light",
+    category: "Drinks",
+    subCategory: "Alcoholic Drinks",
+    description:
+      "A crisp, clean, and refreshing low-calorie lager with a smooth taste, served ice-cold for an easy-drinking experience.",
+    price: 75,
+    isSignature: false,
+    imageUrl: "https://placehold.co/400x300?text=SAN+MIG+LIGHT",
+    tags: ["Crisp", "LowCalorie", "Refreshing"],
+  },
+  {
+    id: "d21",
+    name: "San Mig Pale Pilsen",
+    category: "Drinks",
+    subCategory: "Alcoholic Drinks",
+    description:
+      "The iconic, full-bodied Filipino beer featuring a rich, smooth hop flavor and a clean, satisfying finish.",
+    price: 75,
+    isSignature: false,
+    imageUrl: "https://placehold.co/400x300?text=SAN+MIG+PALE",
+    tags: ["Classic", "FullBodied", "Iconic"],
+  },
+  {
+    id: "d22",
+    name: "San Mig Apple",
+    category: "Drinks",
+    subCategory: "Alcoholic Drinks",
+    description:
+      "A sweet and crisp fruit-flavored beer blend bursting with the refreshing taste of fresh green apples.",
+    price: 75,
+    isSignature: false,
+    imageUrl: "https://placehold.co/400x300?text=SAN+MIG+APPLE",
+    tags: ["Fruity", "Sweet", "Crisp"],
+  },
+  {
+    id: "d23",
+    name: "Alfonso Brandy",
+    category: "Drinks",
+    subCategory: "Alcoholic Drinks",
+    description:
+      "A smooth and deeply aromatic classic Spanish brandy, boasting a rich oak profile with subtle hints of sweet vanilla.",
+    price: 75,
+    isSignature: false,
+    imageUrl: "https://placehold.co/400x300?text=ALFONSO+BRANDY",
+    tags: ["Smooth", "Rich", "Aromatic"],
   },
   // --- ADD ONS / PASTRIES ---
   {
