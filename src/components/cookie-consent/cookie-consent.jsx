@@ -18,7 +18,7 @@ export default function CookieConsent() {
       // Show popup after a slight delay for better experience
       const timer = setTimeout(() => {
         setIsVisible(true);
-      }, 1500);
+      }, 3500);
       return () => clearTimeout(timer);
     }
   }, []);

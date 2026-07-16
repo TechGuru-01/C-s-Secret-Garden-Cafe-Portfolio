@@ -11,10 +11,8 @@ export default function ContactForm() {
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // State para sa mga validation errors
   const [errors, setErrors] = useState({});
 
-  // Helper function para i-validate ang email format
   const isValidEmail = (emailStr) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
   };
@@ -22,10 +20,8 @@ export default function ContactForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Reset errors bago mag-validate ulit
     const newErrors = {};
 
-    // Custom Validation Checks
     if (!name.trim()) {
       newErrors.name = "Please enter your name.";
     }
@@ -40,21 +36,19 @@ export default function ContactForm() {
       newErrors.message = "Please enter your message content.";
     }
 
-    // Kung may mga errors, i-set ang state at huwag ituloy ang submission
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
-    // Kung walang errors, i-clear ang error state at simulan ang pagpapadala
     setErrors({});
     setIsSending(true);
 
     const templateParams = {
-      name: name, // Matches {{name}} in your template
-      email: email, // Matches {{email}} in your template
-      title: subject, // Matches {{title}} in your template subject line
-      message: message, // Matches {{message}} in your template
+      name: name, 
+      email: email, 
+      title: subject,
+      message: message, 
     };
 
     const SERVICE_ID = "service_hrfynlq";
@@ -79,7 +73,7 @@ export default function ContactForm() {
       });
   };
 
-  // Handler para i-reset ang form kapag gustong magpadala ulit ng user
+  
   const handleResetForm = () => {
     setName("");
     setEmail("");
@@ -88,7 +82,7 @@ export default function ContactForm() {
     setIsSubmitted(false);
   };
 
-  // Handler para tanggalin ang error kapag nag-type na ulit si user
+  
   const handleInputChange = (field, value, setter) => {
     setter(value);
     if (errors[field]) {
