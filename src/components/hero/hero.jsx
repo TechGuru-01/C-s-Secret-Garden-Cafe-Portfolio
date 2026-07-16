@@ -17,7 +17,7 @@ export default function Hero({ onNavigate }) {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-[1.02] pointer-events-none"
         style={{
           backgroundImage:
-            "url('/src/assets/hero/garden_hero_bg_1783269228447.jpg')",
+            "url('/hero/garden_hero_bg_1783269228447.jpg')",
         }}
       />
       {/* High-end gradient overlay for gorgeous typography legibility */}
@@ -189,7 +189,7 @@ export default function Hero({ onNavigate }) {
             <div
               className="w-full  h-full bg-cover bg-center hover:scale-105 transition-transform duration-700"
               style={{
-                backgroundImage: "url('src/assets/hero/hero_image_2.jpg')",
+                backgroundImage: "url('/hero/hero_image_2.jpg')",
               }}
             />
           </motion.div>
@@ -210,7 +210,7 @@ export default function Hero({ onNavigate }) {
             <div
               className="w-full h-full bg-cover bg-center hover:scale-105 transition-transform duration-700"
               style={{
-                backgroundImage: "url('src/assets/hero/hero_image_1.jpg')",
+                backgroundImage: "url('/hero/hero_image_1.jpg')",
               }}
             />
             {/* Price badge */}

@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Youtube, Heart } from "lucide-react";
-import cafeLogo from "../../assets/logo/logo.jpg";
+import cafeLogo from "/logo/logo.jpg";
 
 export default function Footer({ onNavigate }) {
   const currentYear = new Date().getFullYear();

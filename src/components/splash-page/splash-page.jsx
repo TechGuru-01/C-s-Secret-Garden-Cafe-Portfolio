@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Sparkles } from 'lucide-react';
 import { FernSilhouette, CascadingBranchSilhouette, SunflowerSilhouette, PalmSilhouette } from '../silhouettes/silhouettes';
-import cafeLogo from "../../assets/logo/logo.jpg";
+import cafeLogo from "/logo/logo.jpg";
 
 export default function SplashPage({ onComplete }) {
   const [particles, setParticles] = useState([]);

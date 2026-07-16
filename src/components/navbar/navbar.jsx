@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, CalendarDays, Flower2 } from 'lucide-react';
-import cafeLogo from "../../assets/logo/logo.jpg";
+import cafeLogo from "/logo/logo.jpg";
 
 export default function Navbar({ onNavigate, activeView = 'home' }) {
   const [isSticky, setIsSticky] = useState(false);
