@@ -42,16 +42,7 @@ export default function Hero({ onNavigate }) {
         {/* Left Side: Welcoming Display Typography - Fixed layout alignment for mobile */}
         <div className="lg:col-span-7 flex flex-col justify-center text-center lg:text-left items-center lg:items-start">
           {/* Tag Line Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.85 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 100, damping: 12 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 border border-sunflower/40 text-white font-mono text-xs font-semibold mb-6 shadow-sm backdrop-blur-md"
-          >
-            <Compass className="w-3.5 h-3.5 text-sunflower" />
-            <span>DISCOVER THE HIDDEN SANCTUARY</span>
-          </motion.div>
+
 
           {/* Heading */}
           <motion.h1
