@@ -15,6 +15,15 @@ export default defineConfig(() => {
       port: 3000, // Explicitly pinapantay sa host port mo
       strictPort: true,
 
+      // FIX: Local proxy bridge added here
+      proxy: {
+        "/api": {
+          target: "http://localhost:5000", // Forward relative /api requests to Express
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+
       // HMR Setup: Pinapanatili ang platform checks pero inaayos ang socket configs
       hmr:
         process.env.DISABLE_HMR === "true"

@@ -34,7 +34,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.post("/api/contact", formLimiter, async (req, res) => {
+app.post("/contact", "/api/contact", formLimiter, async (req, res) => {
   const { name, email, title, message } = req.body;
   try {
     const contactMailOptions = {
@@ -54,7 +54,7 @@ app.post("/api/contact", formLimiter, async (req, res) => {
   }
 });
 
-app.post("/api/reservation", formLimiter, async (req, res) => {
+app.post("/reservation", "/api/reservation", formLimiter, async (req, res) => {
   const { guests, date, time, name, email, phone, notes } = req.body;
   try {
     const bookingMailOption = {
