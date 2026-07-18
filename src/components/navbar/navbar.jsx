@@ -126,7 +126,7 @@ export default function Navbar({ onNavigate, activeView = 'home' }) {
               }`}
             >
               <CalendarDays className="w-4 h-4" />
-              <span>Book a Table</span>
+              <span>Book The Garden</span>
             </button>
           </div>
 

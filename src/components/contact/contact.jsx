@@ -131,14 +131,14 @@ export default function Contact() {
                   <span className="font-medium text-charcoal/70">
                     Monday - Thursday
                   </span>
-                  <span className="font-semibold">9:00 AM - 9:30 PM</span>
+                  <span className="font-semibold">3:00 PM - 11:00 PM</span>
                 </div>
                 <div className="flex justify-between border-b border-charcoal/5 pb-1.5">
                   <span className="font-medium text-charcoal/70">
                     Friday - Sunday
                   </span>
                   <span className="font-semibold text-sunflower">
-                    9:00 AM - 10:00 PM
+                    3:00 PM - 11:00 PM
                   </span>
                 </div>
                 <div className="flex justify-between text-[11px] text-charcoal/50 pt-1 italic">
@@ -246,7 +246,10 @@ export default function Contact() {
                   }}
                   className="relative z-10 flex flex-col items-center gap-1 cursor-pointer"
                   onClick={() =>
-                    window.open("https://maps.google.com", "_blank")
+                    window.open(
+                      "https://maps.app.goo.gl/av7Nnc8YdiQijjmW8",
+                      "_blank",
+                    )
                   }
                 >
                   <MapPin className="w-10 h-10 text-sunflower fill-white stroke-sunflower stroke-2 drop-shadow-lg" />

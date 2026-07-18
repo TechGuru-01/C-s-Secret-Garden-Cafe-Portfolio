@@ -145,17 +145,6 @@ export const menuItems = [
     tags: ["Crispy", "Savory", "GreatForSharing"],
   },
   {
-    id: "s2",
-    name: "Molo Soup",
-    category: "Sharing Plates",
-    description:
-      "A comforting bowl of traditional Filipino-Chinese pork dumpling soup in a rich, savory chicken broth, garnished with toasted garlic and fresh scallions. Perfect for sharing.",
-    price: 120,
-    isSignature: false,
-    imageUrl: "https://placehold.co/400x300?text=MOLO+SOUP",
-    tags: ["Warm", "Comfort", "GreatForSharing"],
-  },
-  {
     id: "s3",
     name: "Beef Strip Platter",
     category: "Sharing Plates",

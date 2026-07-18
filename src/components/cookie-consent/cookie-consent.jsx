@@ -1,21 +1,55 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Cookie, X, ShieldCheck } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Cookie, X, ShieldCheck } from "lucide-react";
+
+const loadScript = (src, id) => {
+  if (document.getElementById(id)) return;
+  const script = document.createElement("script");
+  script.src = src;
+  script.id = id;
+  script.async = true;
+  document.head.appendChild(script);
+};
+
+const applyCookieConsent = (consentObj) => {
+  if (!consentObj) return;
+
+  if (consentObj.analytics) {
+    loadScript(
+      "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",
+      "google-analytics",
+    );
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-XXXXXXXXXX");
+  } else {
+    document.getElementById("google-analytics")?.remove();
+  }
+
+  if (consentObj.functional) {
+    // Initialize functional integrations here
+  }
+};
 
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
   const [preferences, setPreferences] = useState({
     essential: true,
-    functional: true,
+    functional: false,
     analytics: false,
   });
 
   useEffect(() => {
-    // Check if consent has already been given
-    const consent = localStorage.getItem('garden_cookies_consent');
-    if (!consent) {
-      // Show popup after a slight delay for better experience
+    const consent = localStorage.getItem("garden_cookies_consent");
+    if (consent) {
+      const parsedConsent = JSON.parse(consent);
+      setPreferences(parsedConsent);
+      applyCookieConsent(parsedConsent);
+    } else {
       const timer = setTimeout(() => {
         setIsVisible(true);
       }, 3500);
@@ -24,25 +58,33 @@ export default function CookieConsent() {
   }, []);
 
   const handleAcceptAll = () => {
-    localStorage.setItem('garden_cookies_consent', JSON.stringify({
+    const allConsent = {
       essential: true,
       functional: true,
       analytics: true,
-    }));
+    };
+    localStorage.setItem("garden_cookies_consent", JSON.stringify(allConsent));
+    applyCookieConsent(allConsent);
     setIsVisible(false);
   };
 
   const handleSavePreferences = () => {
-    localStorage.setItem('garden_cookies_consent', JSON.stringify(preferences));
+    localStorage.setItem("garden_cookies_consent", JSON.stringify(preferences));
+    applyCookieConsent(preferences);
     setIsVisible(false);
   };
 
   const handleDeclineAll = () => {
-    localStorage.setItem('garden_cookies_consent', JSON.stringify({
+    const minimalConsent = {
       essential: true,
       functional: false,
       analytics: false,
-    }));
+    };
+    localStorage.setItem(
+      "garden_cookies_consent",
+      JSON.stringify(minimalConsent),
+    );
+    applyCookieConsent(minimalConsent);
     setIsVisible(false);
   };
 
@@ -53,11 +95,10 @@ export default function CookieConsent() {
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 30, scale: 0.95 }}
-          transition={{ type: 'spring', damping: 20, stiffness: 100 }}
+          transition={{ type: "spring", damping: 20, stiffness: 100 }}
           className="fixed bottom-6 right-6 left-6 md:left-auto md:max-w-md bg-white border border-sunflower/20 rounded-3xl p-6 shadow-2xl z-50 text-left"
           id="cookie-consent-popup"
         >
-          {/* Main Consent Form */}
           {!showPreferences ? (
             <div className="space-y-4">
               <div className="flex items-start justify-between gap-4">
@@ -84,7 +125,10 @@ export default function CookieConsent() {
               </div>
 
               <p className="text-xs text-charcoal/70 leading-relaxed">
-                We use organic cookies to optimize your browsing experience. This includes saving your favorite menu items, keeping track of table reservations, and analyzing botanical traffic so we can tailor our services.
+                We use organic cookies to optimize your browsing experience.
+                This includes saving your favorite menu items, keeping track of
+                table reservations, and analyzing botanical traffic so we can
+                tailor our services.
               </p>
 
               <div className="pt-2 flex flex-col sm:flex-row gap-2">
@@ -103,7 +147,6 @@ export default function CookieConsent() {
               </div>
             </div>
           ) : (
-            /* Custom Preferences Panel */
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-sunflower/10 text-sunflower rounded-xl">
@@ -120,15 +163,17 @@ export default function CookieConsent() {
               </div>
 
               <div className="space-y-3 pt-2">
-                {/* Essential Toggle (Always on) */}
                 <div className="flex items-start justify-between gap-4 p-2.5 rounded-xl bg-cream/30 border border-sunflower/5">
                   <div className="space-y-1">
                     <span className="text-xs font-bold text-charcoal flex items-center gap-1.5">
                       Essential Cookies
-                      <span className="bg-charcoal/10 text-charcoal/70 text-[8px] font-mono px-1.5 py-0.5 rounded uppercase">Required</span>
+                      <span className="bg-charcoal/10 text-charcoal/70 text-[8px] font-mono px-1.5 py-0.5 rounded uppercase">
+                        Required
+                      </span>
                     </span>
                     <p className="text-[10px] text-charcoal/60 leading-snug">
-                      Crucial for preserving secure table booking data and page transitions.
+                      Crucial for preserving secure table booking data and page
+                      transitions.
                     </p>
                   </div>
                   <input
@@ -139,34 +184,48 @@ export default function CookieConsent() {
                   />
                 </div>
 
-                {/* Functional Toggle */}
                 <div className="flex items-start justify-between gap-4 p-2.5 rounded-xl bg-cream/30 border border-sunflower/5">
                   <div className="space-y-1">
-                    <span className="text-xs font-bold text-charcoal">Functional Cookies</span>
+                    <span className="text-xs font-bold text-charcoal">
+                      Functional Cookies
+                    </span>
                     <p className="text-[10px] text-charcoal/60 leading-snug">
-                      Remembers your favorite menu dishes and custom filter searches across visits.
+                      Remembers your favorite menu dishes and custom filter
+                      searches across visits.
                     </p>
                   </div>
                   <input
                     type="checkbox"
                     checked={preferences.functional}
-                    onChange={(e) => setPreferences({ ...preferences, functional: e.target.checked })}
+                    onChange={(e) =>
+                      setPreferences({
+                        ...preferences,
+                        functional: e.target.checked,
+                      })
+                    }
                     className="w-4 h-4 text-sunflower border-sunflower/30 rounded focus:ring-sunflower cursor-pointer"
                   />
                 </div>
 
-                {/* Analytics Toggle */}
                 <div className="flex items-start justify-between gap-4 p-2.5 rounded-xl bg-cream/30 border border-sunflower/5">
                   <div className="space-y-1">
-                    <span className="text-xs font-bold text-charcoal">Performance & Analytics</span>
+                    <span className="text-xs font-bold text-charcoal">
+                      Performance & Analytics
+                    </span>
                     <p className="text-[10px] text-charcoal/60 leading-snug">
-                      Helps our culinary gardeners study website flow to craft better layouts.
+                      Helps our culinary gardeners study website flow to craft
+                      better layouts.
                     </p>
                   </div>
                   <input
                     type="checkbox"
                     checked={preferences.analytics}
-                    onChange={(e) => setPreferences({ ...preferences, analytics: e.target.checked })}
+                    onChange={(e) =>
+                      setPreferences({
+                        ...preferences,
+                        analytics: e.target.checked,
+                      })
+                    }
                     className="w-4 h-4 text-sunflower border-sunflower/30 rounded focus:ring-sunflower cursor-pointer"
                   />
                 </div>

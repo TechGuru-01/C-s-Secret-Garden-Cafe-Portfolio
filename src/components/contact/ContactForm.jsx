@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
-import emailjs from "@emailjs/browser";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState("Proposal Event");
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -17,7 +16,7 @@ export default function ContactForm() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -45,50 +44,58 @@ export default function ContactForm() {
     setIsSending(true);
 
     const templateParams = {
-      name: name, 
-      email: email, 
+      name: name,
+      email: email,
       title: subject,
-      message: message, 
+      message: message,
     };
 
-    const SERVICE_ID = "service_hrfynlq";
-    const TEMPLATE_ID = "template_aw4k4sea";
-    const PUBLIC_KEY = "Qmsf7IWCoqDT7OL35";
-
-    emailjs
-      .send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
-      .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-          setIsSubmitted(true);
-          // Don't clear inputs here so the success card can still display the summary values!
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        (error) => {
-          console.error("FAILED...", error);
-          alert("Something went wrong. Please try again later.");
-        },
-      )
-      .finally(() => {
-        setIsSending(false);
+        body: JSON.stringify(templateParams),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to send inquiry.");
+      }
+
+      console.log("SUCCESS!", data);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("FAILED TO SEND:", error);
+      // Ipakita ang totoong error sa screen imbes na lumang alert box
+      setErrors({
+        submit:
+          error.message ||
+          "Something went wrong. Please check if backend is running.",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
-  
   const handleResetForm = () => {
     setName("");
     setEmail("");
-    setSubject("Table Query");
+    setSubject("Proposal Event");
     setMessage("");
     setIsSubmitted(false);
+    setErrors({});
   };
 
-  
   const handleInputChange = (field, value, setter) => {
     setter(value);
-    if (errors[field]) {
+    if (errors[field] || errors.submit) {
       setErrors((prev) => {
         const updated = { ...prev };
         delete updated[field];
+        delete updated.submit;
         return updated;
       });
     }
@@ -111,6 +118,14 @@ export default function ContactForm() {
             className="space-y-5"
             noValidate
           >
+            {/* Error banner para sa mga server errors o rate limits */}
+            {errors.submit && (
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2.5 text-red-600 text-xs font-semibold">
+                <AlertCircle className="w-5 h-5 shrink-0" />
+                <span>{errors.submit}</span>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {/* Name Input */}
               <div className="flex flex-col gap-1.5">
@@ -180,6 +195,7 @@ export default function ContactForm() {
                   Intimate Parties & Celebrations
                 </option>
                 <option value="Feedback">Feedback or Food suggestions</option>
+                <option value="Other">Other...</option>
               </select>
             </div>
 

@@ -40,7 +40,7 @@ export default function Footer({ onNavigate }) {
           {/* Social media connections */}
           <div className="flex items-center gap-3 pt-2">
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/TheCsCafe"
               target="_blank"
               rel="noreferrer"
               className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-sunflower hover:text-charcoal transition-all text-[#FFF9EC]/80"
@@ -49,22 +49,13 @@ export default function Footer({ onNavigate }) {
               <Facebook className="w-4 h-4" />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/the_cs_cafe/"
               target="_blank"
               rel="noreferrer"
               className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-sunflower hover:text-charcoal transition-all text-[#FFF9EC]/80"
               aria-label="Follow us on Instagram"
             >
               <Instagram className="w-4 h-4" />
-            </a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noreferrer"
-              className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-sunflower hover:text-charcoal transition-all text-[#FFF9EC]/80"
-              aria-label="Subscribe on YouTube"
-            >
-              <Youtube className="w-4 h-4" />
             </a>
           </div>
         </div>
@@ -130,12 +121,12 @@ export default function Footer({ onNavigate }) {
               Lallana St. Rafael Palma, San Antonio
             </p>
             <p>
-              <strong className="text-[#FFF9EC]">Hotline:</strong> +63 917 839
-              2012
+              <strong className="text-[#FFF9EC]">Hotline:</strong> +63 942 329
+              9322
             </p>
             <p>
               <strong className="text-[#FFF9EC]">Email:</strong>{" "}
-              bookings@cscafegarden.com
+              giachiappiazzi@gmail.com
             </p>
             <p className="italic text-sunflower pt-1">
               &ldquo;Where blooms meet brews, discover the garden secret.&rdquo;
@@ -153,7 +144,7 @@ export default function Footer({ onNavigate }) {
         <div className="flex items-center gap-1.5 justify-center order-1 md:order-2">
           <span>Crafted with</span>
           <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 animate-pulse" />
-          <span>for a premium experience</span>
+          <span>for a relaxing experience</span>
         </div>
       </div>
     </footer>

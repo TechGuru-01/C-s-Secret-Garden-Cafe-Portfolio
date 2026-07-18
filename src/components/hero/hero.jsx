@@ -17,11 +17,11 @@ export default function Hero({ onNavigate }) {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-[1.02] pointer-events-none"
         style={{
           backgroundImage:
-            "url('/hero/garden_hero_bg_1783269228447.jpg')",
+            "url('/hero/main_hero.jpg')",
         }}
       />
       {/* High-end gradient overlay for gorgeous typography legibility */}
-      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/95 via-charcoal/85 to-charcoal/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/50 via-charcoal/45 to-charcoal/30 pointer-events-none" />
       <div className="absolute inset-0 bg-black/25 mix-blend-multiply pointer-events-none" />
 
       {/* Dynamic Background Organic Curves, Sunlight, and Majestic Silhouettes */}
