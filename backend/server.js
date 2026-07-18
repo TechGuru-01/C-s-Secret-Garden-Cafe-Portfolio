@@ -16,7 +16,7 @@ app.use(express.json());
 
 const formLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 60,
+  max: 3,
   message: { message: "Too many attempts. Try again after 15 minutes." },
   standardHeaders: true,
   legacyHeaders: false,
@@ -45,17 +45,17 @@ app.post("/api/contact", formLimiter, async (req, res) => {
     };
 
     await transporter.sendMail(contactMailOptions);
-    res.status(200).json({ success: true, message: "Inquiry sent!" });
+    return res.status(200).json({ success: true, message: "Inquiry sent!" });
   } catch (error) {
     console.error("Nodemailer error:", error);
-    res
+    return res
       .status(500)
       .json({ success: false, message: `Failed: ${error.message}` });
   }
 });
 
 app.post("/api/reservation", formLimiter, async (req, res) => {
-  const { guests, date, time, name, email, phone, notes} = req.body;
+  const { guests, date, time, name, email, phone, notes } = req.body;
   try {
     const bookingMailOption = {
       from: process.env.EMAIL_USER,
@@ -78,12 +78,18 @@ app.post("/api/reservation", formLimiter, async (req, res) => {
     });
   } catch (error) {
     console.error("Nodemailer error:", error);
-    res
+    return res
       .status(500)
       .json({ success: false, message: `Failed: ${error.message}` });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// FIX 1: Only call listen if running locally outside of Vercel serverless environments
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running locally on port ${PORT}`);
+  });
+}
+
+// FIX 2: Export the app instance so Vercel can catch it and wrap it automatically
+export default app;
