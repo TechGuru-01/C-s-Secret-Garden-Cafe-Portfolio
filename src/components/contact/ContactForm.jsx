@@ -69,7 +69,6 @@ export default function ContactForm() {
       setIsSubmitted(true);
     } catch (error) {
       console.error("FAILED TO SEND:", error);
-      // Ipakita ang totoong error sa screen imbes na lumang alert box
       setErrors({
         submit:
           error.message ||

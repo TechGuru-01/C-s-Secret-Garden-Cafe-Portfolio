@@ -45,17 +45,17 @@ app.post(["/contact", "/api/contact"], formLimiter, async (req, res) => {
       subject: `Inquiry: ${title}`,
       html: getInquiryTemplate(name, email, title, message),
     };
-    const customerContacntMailOption = {
+    const customerContactMailOption = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: `Your Secret Inquiry: ${title}`,
       html: sendInquiryTemplate(name, email, title, message),
     };
 
-    await Promise.all(
+    await Promise.all([
       transporter.sendMail(contactMailOptions),
-      transporter.sendMail(customerContacntMailOption),
-    );
+      transporter.sendMail(customerContactMailOption),
+    ]);
 
     return res.status(200).json({ success: true, message: "Inquiry sent!" });
   } catch (error) {
