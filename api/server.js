@@ -91,7 +91,7 @@ app.post(
       };
       await Promise.all([
         transporter.sendMail(bookingMailOption),
-        transporter.sendMail(customerMailOptoin),
+        transporter.sendMail(customerMailOption),
       ]);
       return res.status(200).json({
         success: true,
