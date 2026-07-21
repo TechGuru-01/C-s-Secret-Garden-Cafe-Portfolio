@@ -149,7 +149,7 @@ export default function Reservation({ isOpen, onClose }) {
       time: formattedTime,
       guests,
       title: "Exclusive Whole Venue Event",
-      message: notes || "No additional notes.",
+      notes: notes || "No additional notes.",
     };
 
     try {
@@ -162,7 +162,7 @@ export default function Reservation({ isOpen, onClose }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to send reservation.");
+        throw new Error(data.notes || "Failed to send reservation.");
       }
 
       const newReservation = {

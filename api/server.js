@@ -3,8 +3,9 @@ import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import nodemailer from "nodemailer";
-import { getInquiryTemplate } from "./contactTemplate.js";
-import { getReservationTemplate } from "./bookingTemplate.js";
+import { getInquiryTemplate } from "./templates/contactTemplate.js";
+import { getReservationTemplate } from "./templates/bookingTemplate.js";
+import { sendReservationTemplate } from "./templates/customerBookingTemplate.js";
 
 dotenv.config();
 
@@ -54,42 +55,61 @@ app.post(["/contact", "/api/contact"], formLimiter, async (req, res) => {
   }
 });
 
-app.post(["/reservation", "/api/reservation"], formLimiter, async (req, res) => {
-  const { guests, date, time, name, email, phone, notes } = req.body;
-  try {
-    const bookingMailOption = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
-      subject: "Reservation",
-      html: getReservationTemplate(
-        guests,
-        date,
-        time,
-        name,
-        email,
-        phone,
-        notes,
-      ),
-    };
-    await transporter.sendMail(bookingMailOption);
-    return res.status(200).json({
-      success: true,
-      message: "Reservation completed and email sent successfully!",
-    });
-  } catch (error) {
-    console.error("Nodemailer error:", error);
-    return res
-      .status(500)
-      .json({ success: false, message: `Failed: ${error.message}` });
-  }
-});
+app.post(
+  ["/reservation", "/api/reservation"],
+  formLimiter,
+  async (req, res) => {
+    const { guests, date, time, name, email, phone, notes } = req.body;
+    try {
+      const bookingMailOption = {
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER,
+        subject: "Reservation",
+        html: getReservationTemplate(
+          guests,
+          date,
+          time,
+          name,
+          email,
+          phone,
+          notes,
+        ),
+      };
+      const customerMailOption = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: "Your Secret Reservation Ticket",
+        html: sendReservationTemplate(
+          guests,
+          date,
+          time,
+          name,
+          email,
+          phone,
+          notes,
+        ),
+      };
+      await Promise.all([
+        transporter.sendMail(bookingMailOption),
+        transporter.sendMail(customerMailOptoin),
+      ]);
+      return res.status(200).json({
+        success: true,
+        message: "Reservation completed and email sent successfully!",
+      });
+    } catch (error) {
+      console.error("Nodemailer error:", error);
+      return res
+        .status(500)
+        .json({ success: false, message: `Failed: ${error.message}` });
+    }
+  },
+);
 
-// FIX 1: Only call listen if running locally outside of Vercel serverless environments
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
     console.log(`Server running locally on port ${PORT}`);
   });
 }
 
-// FIX 2: Export the app instance so Vercel can catch it and wrap it automatically
 export default app;
