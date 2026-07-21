@@ -35,6 +35,10 @@ export default function Reservation({ isOpen, onClose }) {
   const isEmailValid = (emailStr) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
   };
+  const phoneRegex = (phoneNo) => {
+   return /^(09|\+639)\d{9}$/.test(phoneNo);
+    
+  };
 
   const VENUE_RENTAL_PRICE = 4500;
   const USE_DURATION_HOURS = 6;
@@ -122,12 +126,12 @@ export default function Reservation({ isOpen, onClose }) {
     if (!name.trim()) step2Errors.name = "Full name is required.";
     if (!email.trim()) {
       step2Errors.email = "Email address is required.";
-    } else if (!isEmailValid(email)) {
+    } else if (!isEmailValid(email.trim())) {
       step2Errors.email = "Please enter a valid email address.";
     }
     if (!phone.trim()) {
       step2Errors.phone = "Phone number is required.";
-    } else if (phone.replace(/\D/g, "").length < 7) {
+    } else if (!phoneRegex(phone.trim())) {
       step2Errors.phone = "Please enter a valid contact number.";
     }
 
