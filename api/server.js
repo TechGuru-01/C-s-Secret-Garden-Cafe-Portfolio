@@ -6,6 +6,7 @@ import nodemailer from "nodemailer";
 import { getInquiryTemplate } from "./templates/contactTemplate.js";
 import { getReservationTemplate } from "./templates/bookingTemplate.js";
 import { sendReservationTemplate } from "./templates/customerBookingTemplate.js";
+import { sendInquiryTemplate } from "./templates/customerContactTemplate.js";
 
 dotenv.config();
 
@@ -44,8 +45,18 @@ app.post(["/contact", "/api/contact"], formLimiter, async (req, res) => {
       subject: `Inquiry: ${title}`,
       html: getInquiryTemplate(name, email, title, message),
     };
+    const customerContacntMailOption = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: `Your Secret Inquiry: ${title}`,
+      html: sendInquiryTemplate(name, email, title, message),
+    };
 
-    await transporter.sendMail(contactMailOptions);
+    await Promise.all(
+      transporter.sendMail(contactMailOptions),
+      transporter.sendMail(customerContacntMailOption),
+    );
+
     return res.status(200).json({ success: true, message: "Inquiry sent!" });
   } catch (error) {
     console.error("Nodemailer error:", error);
